@@ -9,12 +9,12 @@ Yosoi is designed to scale beyond a single machine. The integrations below are p
 
 | Integration | Role |
 |-------------|------|
-| **Redis** [△](#ref-1) | Distributed selector cache and job state |
-| **RabbitMQ** [○](#ref-2) | URL queue and worker coordination |
-| **Prefect** [◑](#ref-3) | Workflow orchestration and scheduling |
-| **Langfuse** [◇](#ref-4) | LLM observability and prompt tracing |
+| **Redis**<sup>[△](#ref-1)</sup> | Distributed selector cache and job state |
+| **RabbitMQ**<sup>[○](#ref-2)</sup> | URL queue and worker coordination |
+| **Prefect**<sup>[◑](#ref-3)</sup> | Workflow orchestration and scheduling |
+| **Langfuse**<sup>[◇](#ref-4)</sup> | LLM observability and prompt tracing |
 | **Persistence** | Durable result storage across runs |
-| **Turso** [★](#ref-5) | Embedded distributed SQLite for selector snapshots |
+| **Turso**<sup>[★](#ref-5)</sup> | Embedded distributed SQLite for selector snapshots |
 
 More integrations TBD.
 

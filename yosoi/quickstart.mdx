@@ -3,6 +3,47 @@ title: Quick Start
 description: Install Yosoi and start scraping in minutes.
 ---
 
+import JsonLd from '../../../src/components/JsonLd.astro';
+
+<JsonLd schema={{
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: [
+		{
+			"@type": "Question",
+			name: "What if selector discovery fails?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Check that your API key is valid and that the target URL is publicly accessible. Run with --debug to capture the extracted HTML and inspect what was sent to the LLM.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "How do I force re-discovery for a domain I have already cached?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Pass --force (or -F) to the CLI, or set force=True on the Pipeline constructor. You can also delete the corresponding file from .yosoi/selectors/ and run again.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Can I use pip instead of uv?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Yes. pip install yosoi works fine. The docs use uv because it is faster and handles virtual environments automatically, but there is no hard dependency on it.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "How do I switch providers?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Pass --model groq:llama-3.3-70b-versatile (or any provider:model string) to the CLI, or set YOSOI_MODEL in your .env file.",
+			},
+		},
+	],
+}} />
+
 ## Install
 
 ```bash

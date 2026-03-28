@@ -7,11 +7,11 @@ Not all websites are equally easy to scrape. Understanding why helps you choose 
 
 ## HTML vs. the DOM
 
-When you load a page in a browser, the browser parses the raw HTML and constructs a live tree of objects called the DOM [△](#ref-1) (Document Object Model). JavaScript can then modify that tree: adding nodes, removing them, rewriting text content, injecting entire components. What you see on screen may look nothing like the original HTML the server sent.
+When you load a page in a browser, the browser parses the raw HTML and constructs a live tree of objects called the DOM<sup>[△](#ref-1)</sup> (Document Object Model). JavaScript can then modify that tree: adding nodes, removing them, rewriting text content, injecting entire components. What you see on screen may look nothing like the original HTML the server sent.
 
 Yosoi fetches the raw HTML. It sees what the server returns, not what JavaScript builds after the fact. For most news sites, blogs, and product catalogues this is fine. The content is in the HTML. For single-page apps that load data after the initial render, Yosoi will get a mostly-empty shell.
 
-If you can view the page source in your browser (`Cmd+U` / `Ctrl+U`) and see the text you want to extract, Yosoi can work with it. If the content only appears after JavaScript runs, render the page yourself with Playwright [○](#ref-2) or Puppeteer [◑](#ref-3) and pass the HTML to Yosoi directly.
+If you can view the page source in your browser and see the text you want to extract, Yosoi can work with it. If the content only appears after JavaScript runs, render the page yourself with Playwright<sup>[○](#ref-2)</sup> or Puppeteer<sup>[◑](#ref-3)</sup> and pass the HTML to Yosoi directly. This is the difference between page source (`Cmd+U` / `Ctrl+U`) and using the inspect tool to view the DOM (`Cmd+Shift+C` / `Ctrl+Shift+C`)
 
 A native DOM fetcher that handles this automatically is on the [Roadmap](/roadmap/), but is not available yet.
 
@@ -27,9 +27,9 @@ These are the easiest targets. [QScrape L1 sites](https://qscrape.dev) simulate 
 
 Single-page applications and sites that load content after the initial HTML render. The server sends a minimal shell; JavaScript fetches data and injects it into the DOM. By the time the page looks right in a browser, the raw HTML Yosoi fetched may be largely empty.
 
-For L2 sites, render the page yourself with a headless browser (Playwright [○](#ref-2), Puppeteer [◑](#ref-3)) and pass the resulting HTML to Yosoi. Discovery works against the rendered output the same way it works against static HTML.
+For L2 sites, render the page yourself with a headless browser (Playwright<sup>[○](#ref-2)</sup>, Puppeteer<sup>[◑](#ref-3)</sup>) and pass the resulting HTML to Yosoi. Discovery works against the rendered output the same way it works against static HTML.
 
-[QScrape L2 sites](https://qscrape.dev) cover this category with Lit [◇](#ref-4), Svelte [★](#ref-5), React [⬡](#ref-6), and Vue [▽](#ref-7).
+[QScrape L2 sites](https://qscrape.dev) cover this category with Lit<sup>[◇](#ref-4)</sup>, Svelte<sup>[★](#ref-5)</sup>, React<sup>[⬡](#ref-6)</sup>, and Vue<sup>[▽](#ref-7)</sup>.
 
 ### L3: Anti-bot sites
 
@@ -67,7 +67,7 @@ Not directly. Yosoi fetches raw HTML, which is mostly empty for SPAs. Render the
 <details>
 <summary>Why do class names change between deploys on framework-based sites?</summary>
 
-Build tools like webpack [◎](#ref-8) and Vite [✦](#ref-9) generate hashed class names to enable long-term caching. A deploy changes the hash, which invalidates any selector that targets that class. Yosoi's LLM-based discovery tries to avoid these by preferring stable attributes (IDs, data attributes, semantic tags), but it is not guaranteed.
+Build tools like webpack<sup>[◎](#ref-8)</sup> and Vite<sup>[✦](#ref-9)</sup> generate hashed class names to enable long-term caching. A deploy changes the hash, which invalidates any selector that targets that class. Yosoi's LLM-based discovery tries to avoid these by preferring stable attributes (IDs, data attributes, semantic tags), but it is not guaranteed.
 
 </details>
 

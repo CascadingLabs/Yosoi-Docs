@@ -7,14 +7,14 @@ description: Environment variables and runtime options.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GROQ_KEY` | One of these | Groq [△](#ref-1) API key |
-| `GEMINI_KEY` | One of these | Google Gemini [○](#ref-2) API key |
-| `OPENAI_KEY` | One of these | OpenAI [◑](#ref-3) API key |
-| `CEREBRAS_KEY` | One of these | Cerebras [◇](#ref-4) API key |
-| `OPENROUTER_KEY` | One of these | OpenRouter [★](#ref-5) API key |
+| `GROQ_KEY` | One of these | Groq<sup>[△](#ref-1)</sup> API key |
+| `GEMINI_KEY` | One of these | Google Gemini<sup>[○](#ref-2)</sup> API key |
+| `OPENAI_KEY` | One of these | OpenAI<sup>[◑](#ref-3)</sup> API key |
+| `CEREBRAS_KEY` | One of these | Cerebras<sup>[◇](#ref-4)</sup> API key |
+| `OPENROUTER_KEY` | One of these | OpenRouter<sup>[★](#ref-5)</sup> API key |
 | `YOSOI_MODEL` | Optional | Default model in `provider:model` format (e.g. `groq:llama-3.3-70b-versatile`) |
 | `YOSOI_LOG_LEVEL` | Optional | Logging level: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `ALL` (default: `DEBUG`) |
-| `LOGFIRE_TOKEN` | Optional | Enables Logfire [⬡](#ref-6) tracing |
+| `LOGFIRE_TOKEN` | Optional | Enables Logfire<sup>[⬡](#ref-6)</sup> tracing |
 
 These are the most commonly used provider keys. Yosoi supports [25+ providers](/reference/helpers/) -- each with its own environment variable. You only need one.
 

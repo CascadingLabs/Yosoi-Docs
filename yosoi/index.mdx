@@ -3,11 +3,92 @@ title: Introduction
 description: AI-powered CSS selector discovery for web scraping.
 ---
 
+import CostEffortChart from '../../../src/components/CostEffortChart.tsx';
+import PipelineChart from '../../../src/components/PipelineChart.tsx';
+import JsonLd from '../../../src/components/JsonLd.astro';
+
+<JsonLd schema={{
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "Yosoi",
+	applicationCategory: "DeveloperApplication",
+	operatingSystem: "Cross-platform",
+	description: "AI-powered CSS selector discovery for web scraping. Discover selectors once with an LLM, cache them, and scrape forever at zero cost.",
+	url: "https://cascadinglabs.com/yosoi/",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+	author: {
+		"@type": "Organization",
+		name: "Cascading Labs",
+		url: "https://cascadinglabs.com",
+	},
+}} />
+
+<JsonLd schema={{
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: [
+		{
+			"@type": "Question",
+			name: "What is Yosoi?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "YOSOI stands for You Only Scrape Once (iteratively). Instead of calling an LLM on every scrape or relying on flaky regex heuristics, Yosoi discovers selectors automatically the first time and caches them. You pay once and extract for free from then on. When selectors go stale, Yosoi re-discovers only the broken fields, not the whole contract, so costs stay minimal even as sites change.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "How does Yosoi work?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "You point it at a URL. Yosoi fetches the HTML, sends it to an LLM to identify stable CSS selectors, validates them, and caches the result. Every subsequent scrape of that domain uses the cached selectors directly with no LLM involved.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Why was Yosoi built?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "For internal use at Cascading Labs. Every other API or LLM-per-request approach would have cost hundreds of thousands of dollars at scale. Yosoi was the only economically viable path, and we figured others had the same problem.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Does Yosoi work with JavaScript-rendered sites?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Yosoi fetches static HTML. For sites that require JavaScript to render content, use a headless browser (Playwright, Puppeteer) to render the page first, then pass the HTML to Yosoi. A native DOM fetcher is planned but not available yet.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "What happens if a site redesigns its layout?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Some cached selectors will likely break. Yosoi detects stale selectors at scrape time and runs partial rediscovery — only the broken fields are sent back to the LLM. The fresh selectors are merged into the existing cache. You can also force a full rediscovery by deleting the domain's file from .yosoi/selectors/ or passing --force.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Which LLM provider gives the best results?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Results are generally consistent across providers. Groq and Gemini are fast and cheap; OpenAI tends to be more conservative with selector choices. Run discovery with --model to compare.",
+			},
+		},
+	],
+}} />
+
 **Yosoi** stands for **You Only Scrape Once (iteratively)**. The name captures the core idea: pay for LLM-based selector discovery once per domain, then scrape that domain forever using the cached selectors with no further AI cost.
 
 The "iteratively" part matters. When a site redesigns and cached selectors go stale, Yosoi detects the breakage, re-discovers only the fields that changed, and merges the fresh selectors back into the cache. You pay for discovery again on that partial diff, not from scratch. Over time, the cost of keeping selectors current trends toward zero as layouts stabilize.
 
 Most web scraping tools make you choose between cost and reliability. LLM-per-request APIs are accurate but expensive at scale. Regex heuristics are cheap but brittle. Yosoi takes a different approach: use an LLM once per domain to discover selectors, cache the result, and scrape indefinitely at near-zero cost.
+
+<CostEffortChart client:visible />
 
 ## Technical stack
 
@@ -24,6 +105,8 @@ Most web scraping tools make you choose between cost and reliability. LLM-per-re
 3. The LLM identifies stable CSS selectors for each field in the contract
 4. Selectors are validated and stored in `.yosoi/selectors/`
 5. Future scrapes use the cached selectors directly, with no LLM call needed
+
+<PipelineChart client:visible />
 
 ## FAQs
 

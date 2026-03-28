@@ -17,7 +17,7 @@ If you want to follow progress on a specific feature, the GitHub issue is the mo
 
 ### DOM-Enabled Scraping (A3Nodes)
 
-A node-based pipeline architecture that would let Yosoi drive a real browser (Playwright [△](#ref-1)) to fetch and render JavaScript-heavy pages. L2 sites (SPAs, framework-rendered apps) would no longer require you to run Playwright yourself before passing HTML in.
+A node-based pipeline architecture that would let Yosoi drive a real browser (Playwright<sup>[△](#ref-1)</sup>) to fetch and render JavaScript-heavy pages. L2 sites (SPAs, framework-rendered apps) would no longer require you to run Playwright yourself before passing HTML in.
 
 The idea is to create a new class of selector that can capture DOM assertions, actions, and arrangements (A3) without needing a bulky LLM to drive.
 
@@ -35,11 +35,11 @@ Design is in progress. See [GitHub Projects](https://github.com/orgs/CascadingLa
 
 ### QScrape L2 Sites
 
-Fictional SPA test sites (React [○](#ref-2), Vue [◑](#ref-3), Svelte [◇](#ref-4), Lit [★](#ref-5)) for benchmarking a future DOM fetcher against known, stable targets. Mirrors the existing L1 suite.
+Fictional SPA test sites (React<sup>[○](#ref-2)</sup>, Vue<sup>[◑](#ref-3)</sup>, Svelte<sup>[◇](#ref-4)</sup>, Lit<sup>[★](#ref-5)</sup>) for benchmarking a future DOM fetcher against known, stable targets. Mirrors the existing L1 suite.
 
 ### Distributed Selector Cache
 
-Redis [⬡](#ref-6)-backed selector storage for teams sharing discovery results across machines and CI runs. See [Scaling](/guides/scaling/).
+Redis<sup>[⬡](#ref-6)</sup>-backed selector storage for teams sharing discovery results across machines and CI runs. See [Scaling](/guides/scaling/).
 
 ### Versioned Docs
 

@@ -3,7 +3,7 @@ title: Installation
 description: How to install Yosoi and set up your environment.
 ---
 
-Yosoi requires Python 3.10+ and uses uv [△](#ref-1) for package management.
+Yosoi requires Python 3.10+ and uses uv<sup>[△](#ref-1)</sup> for package management.
 
 ## Install from PyPI
 
@@ -41,7 +41,7 @@ OPENROUTER_KEY=your_openrouter_api_key
 LOGFIRE_TOKEN=your_logfire_token
 ```
 
-Yosoi works with any of these providers [○](#ref-2)[◑](#ref-3)[◇](#ref-4)[★](#ref-5)[⬡](#ref-6). You only need one. Set `LOGFIRE_TOKEN` to enable cloud observability via Logfire [▽](#ref-7).
+Yosoi works with any of these providers<sup>[○](#ref-2)</sup><sup>[◑](#ref-3)</sup><sup>[◇](#ref-4)</sup><sup>[★](#ref-5)</sup><sup>[⬡](#ref-6)</sup>. You only need one. Set `LOGFIRE_TOKEN` to enable cloud observability via Logfire<sup>[▽](#ref-7)</sup>.
 
 ## FAQs
 
@@ -62,7 +62,7 @@ No. One is enough. Yosoi supports [25+ providers](/reference/helpers/) -- these 
 <details>
 <summary>Where should I put my .env file?</summary>
 
-In your project root, next to `pyproject.toml`. Yosoi loads it automatically via `python-dotenv` [◎](#ref-8). Do not commit it to version control.
+In your project root, next to `pyproject.toml`. Yosoi loads it automatically via `python-dotenv`<sup>[◎](#ref-8)</sup>. Do not commit it to version control.
 
 </details>
 

@@ -4,7 +4,7 @@ description: Working Yosoi examples using QScrape test sites.
 slug: guides/examples
 ---
 
-All examples in this documentation use [QScrape](https://qscrape.dev) [△](#ref-1) sites rather than real public websites. QScrape provides stable, purpose-built scraping targets that won't break, won't rate-limit you, and won't be affected by the traffic this documentation generates.
+All examples in this documentation use [QScrape](https://qscrape.dev)<sup>[△](#ref-1)</sup> sites rather than real public websites. QScrape provides stable, purpose-built scraping targets that won't break, won't rate-limit you, and won't be affected by the traffic this documentation generates.
 
 If you want to follow along locally, every example here will work against the corresponding QScrape URL without modification.
 

@@ -115,7 +115,7 @@ Yes. Custom coercions run element-by-element on list fields, the same as built-i
 <details>
 <summary>How do I debug a coercion failure?</summary>
 
-Raise a `ValueError` with a descriptive message inside your coerce function. Pydantic [△](#ref-1) will surface it as a `ValidationError` with field context. Run with `--debug` to inspect the raw extracted values before coercion.
+Raise a `ValueError` with a descriptive message inside your coerce function. Pydantic<sup>[△](#ref-1)</sup> will surface it as a `ValidationError` with field context. Run with `--debug` to inspect the raw extracted values before coercion.
 
 </details>
 

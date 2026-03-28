@@ -3,6 +3,67 @@ title: QScrape
 description: A web scraper evaluation suite for benchmarking and testing scrapers against fictional test websites.
 ---
 
+import JsonLd from '../../src/components/JsonLd.astro';
+
+<JsonLd schema={{
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "QScrape",
+	applicationCategory: "DeveloperApplication",
+	operatingSystem: "Cross-platform",
+	description: "A web scraper evaluation suite that provides fictional test websites across multiple difficulty levels for benchmarking and testing scrapers.",
+	url: "https://qscrape.dev",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+	author: {
+		"@type": "Organization",
+		name: "Cascading Labs",
+		url: "https://cascadinglabs.com",
+	},
+}} />
+
+<JsonLd schema={{
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: [
+		{
+			"@type": "Question",
+			name: "Are QScrape sites suitable for production scraping?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "No. They are fictional test targets designed for evaluation and benchmarking, not for collecting real data.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Do QScrape sites ever change their structure?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Occasionally, when new difficulty variants or layout scenarios are added. Check the GitHub changelog before relying on a specific selector set in CI.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "Can I add QScrape to my automated test suite?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "Yes. Because the sites are stable and purpose-built, they work well as regression targets. Run Yosoi against a QScrape URL in your tests and assert on the extracted field values.",
+			},
+		},
+		{
+			"@type": "Question",
+			name: "What is the difference between L2 and L3 sites?",
+			acceptedAnswer: {
+				"@type": "Answer",
+				text: "L2 sites add framework complexity (React, Svelte, etc.) but make no attempt to block scrapers. L3 sites actively apply anti-bot techniques such as rate limiting or obfuscated markup.",
+			},
+		},
+	],
+}} />
+
 [QScrape](https://qscrape.dev) is a web scraper evaluation suite that provides a collection of fictional test websites across multiple difficulty levels, designed for benchmarking and testing the capabilities of web scrapers.
 
 Built as a side project for Yosoi, QScrape gives you realistic targets to validate your scraping pipelines against, without hitting real sites.
