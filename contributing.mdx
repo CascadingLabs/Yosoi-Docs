@@ -1,21 +1,32 @@
 ---
 title: Contributing
 description: How to contribute to Yosoi and who maintains the project.
+slug: contributing
 ---
+
+import { Steps } from '@astrojs/starlight/components';
 
 Contributions are welcome. Below is what you need to get started.
 
 ## Setting Up
 
-Install with dev dependencies and set up the pre-commit hooks:
+<Steps>
 
-```bash
-uv sync --group dev
+1. Install with dev dependencies
 
-uv run pre-commit install
+   ```bash
+   uv sync --all-groups
+   ```
 
-uv run pre-commit run --all-files
-```
+2. Install the pre-commit hooks
+
+   ```bash
+   uvx prek install
+   ```
+
+3. Happy Coding!
+
+</Steps>
 
 ## Tools
 
@@ -24,11 +35,11 @@ uv run pre-commit run --all-files
 | **Ruff** | Linting & Formatting | `uv run ruff check .` |
 | **Mypy** | Type Checking | `uv run mypy .` |
 | **Pytest** | Testing | `uv run pytest` |
-| **Pre-commit** | Git Hooks | `uv run pre-commit run --all-files` |
+| **Prek** | Git Hooks | `uvx prek run --all-files` |
 
 ## Commit Guidelines
 
-Use [conventional commits](https://www.conventionalcommits.org/):
+We prefer (don't require) [conventional commits](https://www.conventionalcommits.org/):
 
 ```bash
 git commit -m "feat: add new selector discovery feature"
@@ -50,14 +61,14 @@ When opening a PR, please include:
 
 ---
 
-## Maintainers
+## Core Maintainers
 
 | Name | Affiliation |
 |------|------------|
 | [Andrew Berg](https://github.com/AndrewPBerg) | College of Charleston, Cascading Labs |
 | [Houston Miles](https://github.com/HoustonMiles) | College of Charleston, Cascading Labs |
 
-## Team
+## Cascading Labs Members
 
 | Name | Affiliation |
 |------|------------|

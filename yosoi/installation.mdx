@@ -1,0 +1,92 @@
+---
+title: Installation
+description: How to install Yosoi and set up your environment.
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Yosoi requires Python 3.10+, we strongly encourage using uv<sup>[△](#ref-1)</sup> for package management.
+
+## Install
+
+<Tabs syncKey="pkg">
+	<TabItem label="uv">
+		```bash
+		uv add yosoi
+		```
+	</TabItem>
+	<TabItem label="pip">
+		```bash
+		pip install yosoi
+		```
+	</TabItem>
+	<TabItem label="Poetry">
+		```bash
+		poetry add yosoi
+		```
+	</TabItem>
+</Tabs>
+
+## Install from source
+
+<Steps>
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/CascadingLabs/Yosoi
+   ```
+
+2. Navigate into the project directory
+
+   ```bash
+   cd Yosoi
+   ```
+
+3. Install dependencies
+
+   ```bash
+   uv sync
+   ```
+
+4. **Optional:** Install all dependency groups (dev, tests, etc.)
+
+   ```bash
+   uv sync --all-groups
+   ```
+
+</Steps>
+
+## FAQs
+
+<details>
+<summary>Can I use pip instead of uv?</summary>
+
+Yes. `pip install yosoi` works fine. The docs use `uv` because it is faster and handles virtual environments automatically, but there is no hard dependency on it.
+
+</details>
+
+<details>
+<summary>Do I need all of these API keys?</summary>
+
+No. One is enough. Yosoi supports [25+ providers](/reference/helpers/) -- these five are just the most common. If multiple keys are present, set `YOSOI_MODEL` to specify which provider and model to use (e.g. `groq:llama-3.3-70b-versatile`).
+
+</details>
+
+<details>
+<summary>Where should I put my .env file?</summary>
+
+In your project root, next to `pyproject.toml`. Yosoi loads it automatically via `python-dotenv`<sup>[◎](#ref-8)</sup>. Do not commit it to version control.
+
+</details>
+
+<details>
+<summary>What Python versions are supported?</summary>
+
+Python 3.10 and above. Earlier versions are not supported due to use of modern type hint syntax.
+
+</details>
+
+## References
+
+<a id="ref-1"></a>△ **uv**. Astral. *Python package and project manager.* https://docs.astral.sh/uv/

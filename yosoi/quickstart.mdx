@@ -3,6 +3,7 @@ title: Quick Start
 description: Install Yosoi and start scraping in minutes.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
 import JsonLd from '../../../src/components/JsonLd.astro';
 
 <JsonLd schema={{
@@ -50,11 +51,11 @@ import JsonLd from '../../../src/components/JsonLd.astro';
 uv add yosoi
 ```
 
-Add at least one provider key [△](#ref-1)[○](#ref-2)[◑](#ref-3)[◇](#ref-4)[★](#ref-5) to a `.env` file in your project root:
+Export or add a provider key file in your `.env` project root, see the list of all [provider options](https://cascadinglabs.com/reference/helpers/)
 
 ```bash
 GROQ_KEY=your_groq_api_key
-# or GEMINI_KEY, OPENAI_KEY, CEREBRAS_KEY, OPENROUTER_KEY
+# or GEMINI_KEY, OPENAI_KEY, CEREBRAS_KEY, OPENROUTER_KEY, etc.
 ```
 
 ## Option 1: CLI
@@ -62,7 +63,7 @@ GROQ_KEY=your_groq_api_key
 Run discovery and extraction from the terminal without writing any Python.
 
 ```bash
-uv run yosoi --url https://news.ycombinator.com
+uv run yosoi -m groq:llama-3.3-70b-versatile --url https://qscrape.dev/l1/eshop/catalog/?cat=Forge%20%26%20Smithing --contract Product
 ```
 
 Yosoi fetches the page, asks the LLM to identify selectors, validates them, and saves the result to `.yosoi/`. Run the same command again and it reads from cache.
@@ -89,21 +90,51 @@ Use the Python API when you need to process results programmatically.
 import asyncio
 import yosoi as ys
 
-class Article(ys.Contract):
-    title: str = ys.Title()
-    author: str = ys.Author()
-    url: str = ys.Url()
+
+# This Contract is actually built-in, you can import from yosoi.models.defaults!
+class Product(ys.Contract):
+    """Contract for e-commerce product pages."""
+
+    name: str = ys.Title(description='Product name or title')
+    price: float | None = ys.Price(description='Product price (including currency symbol)')
+    rating: float | None = ys.Rating(as_float=True, description='Star rating or review score (numeric, e.g. 4.2)')
+    reviews_count: int | None = Field(description='Number of reviews or ratings')
+    description: str = ys.BodyText(description='Product description or summary')
+    availability: str = Field(description='Stock status (e.g. "In Stock", "Out of Stock")')
 
 async def main():
-    pipeline = ys.Pipeline(ys.auto_config(), contract=Article)
+    pipeline = ys.Pipeline(ys.auto_config(), contract=Product)
 
-    async for item in pipeline.scrape('https://news.ycombinator.com'):
+    async for item in pipeline.scrape('https://qscrape.dev/l1/eshop/catalog/?cat=Forge%20%26%20Smithing'):
+        uv run yosoi -m groq:llama-3.3-70b-versatile --url https://qscrape.dev/l1/eshop/catalog/?cat=Forge%20%26%20Smithing -contract Product
         print(item.get('title'), item.get('url'))
 
 asyncio.run(main())
 ```
 
+>[!Note] As long as you set your key in `.env` this example can be run as is
+
 Discovery only happens once per domain. Subsequent calls read from the local cache with no LLM calls and no cost.
+
+## What Just Happened?
+
+Hopefully your terminal explained most of it, but here is the rundown:
+
+<Steps>
+
+1. Yosoi fetched the static HTML from the QScrape [△](#ref-2) target URL
+
+2. The HTML and your `Product` contract were sent to the LLM
+
+3. The LLM identified CSS selectors for each field in the contract (`name`, `price`, `rating`, etc.)
+
+4. Selectors were validated against the page and cached in `.yosoi/selectors/`
+
+5. Data was extracted using the cached selectors and printed to your terminal
+
+</Steps>
+
+Run the same command again and step 2–3 are skipped entirely. Yosoi reads from the local cache with no LLM call and no cost.
 
 ## FAQs
 
@@ -124,7 +155,7 @@ Pass `--force` (or `-F`) to the CLI, or set `force=True` on the `Pipeline` const
 <details>
 <summary>Can I use pip instead of uv?</summary>
 
-Yes. `pip install yosoi` works fine. The docs use `uv` [⬡](#ref-6) because it is faster and handles virtual environments automatically, but there is no hard dependency on it.
+Yes. `pip install yosoi` works fine. The docs use `uv` [⬡](#ref-1) because it is faster and handles virtual environments automatically, but there is no hard dependency on it.
 
 </details>
 
@@ -137,14 +168,6 @@ Pass `--model groq:llama-3.3-70b-versatile` (or any `provider:model` string) to 
 
 ## References
 
-<a id="ref-1"></a>△ **Groq API**. Groq, Inc. *Low-latency LLM inference.* https://console.groq.com/docs/
+<a id="ref-1"></a>⬡ **uv**. Astral. *Python package and project manager.* https://docs.astral.sh/uv/
 
-<a id="ref-2"></a>○ **Gemini API**. Google. *Gemini language model API.* https://ai.google.dev/gemini-api/docs
-
-<a id="ref-3"></a>◑ **OpenAI API**. OpenAI. *GPT model API.* https://platform.openai.com/docs/
-
-<a id="ref-4"></a>◇ **Cerebras API**. Cerebras Systems. *High-speed LLM inference on wafer-scale hardware.* https://inference-docs.cerebras.ai/
-
-<a id="ref-5"></a>★ **OpenRouter**. OpenRouter. *Unified API for LLM providers.* https://openrouter.ai/docs
-
-<a id="ref-6"></a>⬡ **uv**. Astral. *Python package and project manager.* https://docs.astral.sh/uv/
+<a id="ref-2"></a>△ **QScrape**. Cascading Labs. *Purpose-built fictional scraping targets for benchmarking and testing.* https://qscrape.dev
