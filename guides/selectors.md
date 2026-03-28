@@ -23,10 +23,10 @@ Yosoi supports four selector strategies, tried in escalating order if the prefer
 
 | Level | Strategy | Example |
 |-------|---------|---------|
-| 1 | CSS | `article.product h2.title` |
-| 2 | XPath | `//article[@class="product"]//h2` |
+| 1 | CSS [△](#ref-1) | `article.product h2.title` |
+| 2 | XPath [○](#ref-2) | `//article[@class="product"]//h2` |
 | 3 | Regex | `<h2[^>]*>(.*?)</h2>` |
-| 4 | JSON-LD | `$.name` |
+| 4 | JSON-LD [◑](#ref-3) | `$.name` |
 
 CSS is the default and covers the vast majority of sites. Escalation to XPath or Regex only happens when CSS selectors fail to match during the inline verification step immediately after the LLM responds.
 
@@ -90,8 +90,8 @@ If you already know the right selector, set it directly on the contract field. P
 import yosoi as ys
 
 class Article(ys.Contract):
-    title: str = ys.Title(selector=ys.css('h1.article-title'))
-    author: str = ys.Author(selector=ys.css('span.byline'))
+    title: str = ys.Title(selector='h1.article-title')
+    author: str = ys.Author(selector='span.byline')
 ```
 
 Pinned selectors still go through verification and fallback logic at extraction time.
@@ -122,7 +122,7 @@ At the start of each scrape, Yosoi fetches the page and tests each cached select
 <details>
 <summary>Is the .yosoi/ directory safe to commit?</summary>
 
-The `selectors/` subdirectory is safe and useful to commit if you want to share cached selectors across a team. The `logs/`, `debug_html/`, and `content/` directories are noisy and should stay gitignored.
+The `selectors/` subdirectory is safe and useful to share across a team. The `logs/`, `debug_html/`, and `content/` directories are noisy and should stay gitignored.
 
 </details>
 
@@ -139,3 +139,11 @@ Yosoi returns `None` for that field. If the field is required in your contract, 
 Yes. Set `source` to `"override"` to signal the edit was intentional. Yosoi will use your selector and treat it like a pinned value.
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **CSS Selectors**. W3C. *Specification for selecting HTML elements via CSS patterns.* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors
+
+<a id="ref-2"></a>○ **XPath**. W3C. *XML Path Language for navigating and querying document trees.* https://developer.mozilla.org/en-US/docs/Web/XPath
+
+<a id="ref-3"></a>◑ **JSON-LD**. W3C. *JSON-based format for linked data, commonly embedded in web pages as structured metadata.* https://json-ld.org/

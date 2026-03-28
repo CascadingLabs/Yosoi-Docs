@@ -13,27 +13,16 @@ If you want to follow progress on a specific feature, the GitHub issue is the mo
 
 ---
 
-## In Beta
-
-### DOM-Enabled Scraping
-
-Yosoi can now drive a real browser to fetch and render JavaScript-heavy pages without manual pre-rendering. L2 sites (SPAs, framework-rendered apps) no longer require you to run Playwright yourself before passing HTML in.
-
-The DOM fetcher slots into the existing pipeline in place of the HTTP fetcher. Discovery and extraction code stays the same; only the HTML source changes from a raw server response to a rendered DOM snapshot.
-
-Core functionality works. The public API is still subject to change, and authenticated sessions and smart auto-detection are not yet available.
-
-See [A3Nodes](/guides/a3nodes/) for architecture details and known limitations.
-
----
-
 ## Proposed
 
-### A3Nodes: Node-Based Pipeline Architecture
+### DOM-Enabled Scraping (A3Nodes)
 
-The internal pipeline is being refactored into discrete, composable async nodes. Each stage (fetching, cleaning, discovery, extraction, validation) becomes an independently swappable unit. The DOM fetcher is built on this foundation, and future fetcher types will be too.
+A node-based pipeline architecture that would let Yosoi drive a real browser (Playwright [△](#ref-1)) to fetch and render JavaScript-heavy pages. L2 sites (SPAs, framework-rendered apps) would no longer require you to run Playwright yourself before passing HTML in.
 
-Proposed node types beyond the DOM fetcher:
+The idea is to create a new class of selector that can capture DOM assertions, actions, and arrangements (A3) without needing an bulky LLM to drive.
+
+Proposed node types:
+- DOM fetcher: launches a browser, waits for network idle, captures the rendered DOM
 - Authenticated fetcher: handles session cookies and login flows
 - Proxy rotation: routes requests through a proxy pool
 - Custom wait strategy: configurable DOM settling conditions for slow SPAs
@@ -46,12 +35,26 @@ Design is in progress. See [GitHub Projects](https://github.com/orgs/CascadingLa
 
 ### QScrape L2 Sites
 
-Fictional SPA test sites (React, Vue, Svelte, Lit) for benchmarking the DOM fetcher against known, stable targets. Mirrors the existing L1 suite.
+Fictional SPA test sites (React [○](#ref-2), Vue [◑](#ref-3), Svelte [◇](#ref-4), Lit [★](#ref-5)) for benchmarking a future DOM fetcher against known, stable targets. Mirrors the existing L1 suite.
 
 ### Distributed Selector Cache
 
-Redis-backed selector storage for teams sharing discovery results across machines and CI runs. See [Scaling](/guides/scaling/).
+Redis [⬡](#ref-6)-backed selector storage for teams sharing discovery results across machines and CI runs. See [Scaling](/guides/scaling/).
 
 ### Versioned Docs
 
 Per-release documentation snapshots so older API versions remain accessible.
+
+## References
+
+<a id="ref-1"></a>△ **Playwright**. Microsoft. *Browser automation library for Node.js, Python, Java, and .NET.* https://playwright.dev/python/
+
+<a id="ref-2"></a>○ **React**. Meta. *JavaScript library for building user interfaces.* https://react.dev/
+
+<a id="ref-3"></a>◑ **Vue**. Evan You. *Progressive JavaScript framework for building UIs.* https://vuejs.org/
+
+<a id="ref-4"></a>◇ **Svelte**. Rich Harris. *Compiler-based frontend framework.* https://svelte.dev/
+
+<a id="ref-5"></a>★ **Lit**. Google. *Simple, fast web components library.* https://lit.dev/
+
+<a id="ref-6"></a>⬡ **Redis**. Redis Ltd. *In-memory data structure store used as a database, cache, and message broker.* https://redis.io/docs/

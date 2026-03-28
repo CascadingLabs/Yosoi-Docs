@@ -63,7 +63,7 @@ Return the root selector if explicitly set on the contract class.
 `get_selector_overrides() -> dict[str, dict[str, str]]`
 
 Return selector overrides defined on fields via ``yosoi_selector``.
-**Returns:** `dict[str, dict[str, str]]` — Mapping of field name → selector dict (compatible with ``FieldSelectors`` `dict[str, dict[str, str]]` — structure, e.g. ``{"primary": "h1.title"}``). `dict[str, dict[str, str]]` — Nested contract overrides are included as flat ``{parent}_{child}`` keys.
+**Returns:** `dict[str, dict[str, str]]` -- Mapping of field name to selector dict (e.g. ``{"primary": "h1.title"}``). Nested contract overrides use flat ``{parent}_{child}`` keys.
 
 #### `is_grouped`
 
@@ -115,9 +115,8 @@ Default contract matching the original 5-field behavior.
 
 Main pipeline for discovering and saving CSS selectors with retry logic.
 
-The main pipeline of YOSOi that goes through all the other python files to
-fetch the HTML, parse the HTML, have an LLM discover the selectors, and
-verify and store the selectors.
+Fetches HTML, cleans it, runs LLM-based selector discovery, then verifies
+and stores the selectors.
 
 #### `normalize_url`
 

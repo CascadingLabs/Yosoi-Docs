@@ -29,7 +29,7 @@ result = Product.model_validate(raw)
 
 ## Validators inner class
 
-For custom per-field transforms, define static methods inside a `Validators` class. They run before Pydantic's own validation -- no decorator ceremony required.
+For custom per-field transforms, define static methods inside a `Validators` class. They run before Pydantic's [△](#ref-1) own validation. No decorator ceremony required.
 
 ```python
 class BookStore(ys.Contract):
@@ -93,3 +93,7 @@ No. `Validators` methods must be synchronous static methods. For async post-proc
 `Validators` methods run first, then built-in type coercions, then Pydantic's own validation. This means your custom transforms see the raw extracted string before any coercion has been applied.
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **Pydantic**. Pydantic Services Inc. *Data validation library for Python.* https://docs.pydantic.dev/

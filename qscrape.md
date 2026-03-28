@@ -16,14 +16,14 @@ Built as a side project for Yosoi, QScrape gives you realistic targets to valida
 
 Standard sites with no dynamic data and no web frameworks. Currently available:
 
-- **Mountainhome Herald**: a news portal
-- **ScoreTap**: esports scores
-- **Eldoria Registry of Deeds**: tax records
-- **VaultMart**: e-commerce catalogue
+- [**Mountainhome Herald**](https://qscrape.dev/l1/news): a news portal
+- [**ScoreTap**](https://qscrape.dev/l1/scoretap): esports scores
+- [**Eldoria Registry of Deeds**](https://qscrape.dev/l1/taxes): tax records
+- [**VaultMart**](https://qscrape.dev/l1/eshop): e-commerce catalogue
 
 ### L2: Modern Frameworks
 
-Sites built with Lit, Svelte, React, and Vue, covering typical DOM-level complexity found in the wild.
+Sites built with Lit [△](#ref-1), Svelte [○](#ref-2), React [◑](#ref-3), and Vue [◇](#ref-4), covering typical DOM-level complexity found in the wild.
 
 ### L3: Anti-Bot
 
@@ -62,3 +62,13 @@ Yes. Because the sites are stable and purpose-built, they work well as regressio
 L2 sites add framework complexity (React, Svelte, etc.) but make no attempt to block scrapers. L3 sites actively apply anti-bot techniques such as rate limiting or obfuscated markup.
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **Lit**. Google. *Simple, fast web components library.* https://lit.dev/
+
+<a id="ref-2"></a>○ **Svelte**. Rich Harris. *Compiler-based frontend framework.* https://svelte.dev/
+
+<a id="ref-3"></a>◑ **React**. Meta. *JavaScript library for building user interfaces.* https://react.dev/
+
+<a id="ref-4"></a>◇ **Vue**. Evan You. *Progressive JavaScript framework for building UIs.* https://vuejs.org/

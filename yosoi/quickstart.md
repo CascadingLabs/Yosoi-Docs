@@ -9,7 +9,7 @@ description: Install Yosoi and start scraping in minutes.
 uv add yosoi
 ```
 
-Add at least one provider key to a `.env` file in your project root:
+Add at least one provider key [△](#ref-1)[○](#ref-2)[◑](#ref-3)[◇](#ref-4)[★](#ref-5) to a `.env` file in your project root:
 
 ```bash
 GROQ_KEY=your_groq_api_key
@@ -30,29 +30,21 @@ Yosoi fetches the page, asks the LLM to identify selectors, validates them, and 
 
 | Flag | Description |
 |------|-------------|
-| `--url` | Target URL to discover selectors for |
-| `--provider` | LLM provider to use (e.g. `groq`, `openai`) |
-| `--debug` | Save extracted HTML to `.yosoi/debug_html/` |
+| `--url`, `-u` | Target URL to discover selectors for |
+| `--model`, `-m` | LLM model in `provider:model` format (e.g. `groq:llama-3.3-70b-versatile`) |
+| `--contract`, `-C` | Contract schema (built-in name or `path:Class`) |
+| `--file`, `-f` | File containing URLs (one per line, or JSON) |
+| `--output`, `-o` | Output format: `json`, `csv`, `md`, `jsonl`, `xlsx`, `parquet` |
+| `--workers`, `-w` | Number of concurrent workers for batch processing |
+| `--force`, `-F` | Force re-discovery even if selectors exist |
+| `--debug`, `-d` | Save extracted HTML to `.yosoi/debug_html/` |
 
 ## Option 2: Python script
 
 Use the Python API when you need to process results programmatically.
 
 ```python
-from yosoi import Yosoi
-
-yosoi = Yosoi()
-articles = yosoi.scrape("https://news.ycombinator.com")
-
-for article in articles:
-    print(article.headline, article.url)
-```
-
-Discovery only happens once per domain. Subsequent calls read from the local cache with no LLM calls and no cost.
-
-For typed extraction with validation, define a contract:
-
-```python
+import asyncio
 import yosoi as ys
 
 class Article(ys.Contract):
@@ -60,11 +52,16 @@ class Article(ys.Contract):
     author: str = ys.Author()
     url: str = ys.Url()
 
-pipeline = ys.Pipeline(ys.auto_config(), contract=Article)
+async def main():
+    pipeline = ys.Pipeline(ys.auto_config(), contract=Article)
 
-async for item in pipeline.scrape('https://news.ycombinator.com'):
-    print(item.get('title'), item.get('url'))
+    async for item in pipeline.scrape('https://news.ycombinator.com'):
+        print(item.get('title'), item.get('url'))
+
+asyncio.run(main())
 ```
+
+Discovery only happens once per domain. Subsequent calls read from the local cache with no LLM calls and no cost.
 
 ## FAQs
 
@@ -85,13 +82,27 @@ Delete the corresponding file from `.yosoi/selectors/` and run again. Yosoi will
 <details>
 <summary>Can I use pip instead of uv?</summary>
 
-Yes. `pip install yosoi` works fine. The docs use `uv` because it is faster and handles virtual environments automatically, but there is no hard dependency on it.
+Yes. `pip install yosoi` works fine. The docs use `uv` [⬡](#ref-6) because it is faster and handles virtual environments automatically, but there is no hard dependency on it.
 
 </details>
 
 <details>
 <summary>How do I switch providers?</summary>
 
-Pass `--provider groq` (or `openai`, `gemini`, etc.) to the CLI, or set `YOSOI_PROVIDER` in your `.env` file.
+Pass `--model groq:llama-3.3-70b-versatile` (or any `provider:model` string) to the CLI, or set `YOSOI_MODEL` in your `.env` file.
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **Groq API**. Groq, Inc. *Low-latency LLM inference.* https://console.groq.com/docs/
+
+<a id="ref-2"></a>○ **Gemini API**. Google. *Gemini language model API.* https://ai.google.dev/gemini-api/docs
+
+<a id="ref-3"></a>◑ **OpenAI API**. OpenAI. *GPT model API.* https://platform.openai.com/docs/
+
+<a id="ref-4"></a>◇ **Cerebras API**. Cerebras Systems. *High-speed LLM inference on wafer-scale hardware.* https://inference-docs.cerebras.ai/
+
+<a id="ref-5"></a>★ **OpenRouter**. OpenRouter. *Unified API for LLM providers.* https://openrouter.ai/docs
+
+<a id="ref-6"></a>⬡ **uv**. Astral. *Python package and project manager.* https://docs.astral.sh/uv/

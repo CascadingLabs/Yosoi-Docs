@@ -3,17 +3,19 @@ title: Introduction
 description: AI-powered CSS selector discovery for web scraping.
 ---
 
-Most web scraping tools make you choose between cost and reliability. LLM-per-request APIs are accurate but expensive at scale. Regex heuristics are cheap but brittle. Yosoi takes a different approach: use an LLM once per domain to discover selectors, cache the result, and scrape indefinitely at cost.
+**Yosoi** stands for **You Only Scrape Once (iteratively)**. The name captures the core idea: pay for LLM-based selector discovery once per domain, then scrape that domain forever using the cached selectors with no further AI cost.
 
-The thesis is simple. Selector discovery is a one-time cost. Extraction is the cost of your electricity bill.
+The "iteratively" part matters. When a site redesigns and cached selectors go stale, Yosoi detects the breakage, re-discovers only the fields that changed, and merges the fresh selectors back into the cache. You pay for discovery again on that partial diff, not from scratch. Over time, the cost of keeping selectors current trends toward zero as layouts stabilize.
+
+Most web scraping tools make you choose between cost and reliability. LLM-per-request APIs are accurate but expensive at scale. Regex heuristics are cheap but brittle. Yosoi takes a different approach: use an LLM once per domain to discover selectors, cache the result, and scrape indefinitely at near-zero cost.
 
 ## Technical stack
 
-**Pydantic** is the foundation for contract definitions and data validation. You define what you want to extract as a typed Pydantic model. Yosoi handles the rest.
+**Pydantic** [△](#ref-1) is the foundation for contract definitions and data validation. You define what you want to extract as a typed Pydantic model. Yosoi handles the rest.
 
-**Async native.** The scraping pipeline is built on `asyncio` from the ground up. `scrape()` is an async generator; `process_urls()` is fully non-blocking.
+**Async native.** The scraping pipeline is built on `asyncio` [○](#ref-2) from the ground up. `scrape()` is an async generator; `process_urls()` is fully non-blocking.
 
-**Concurrent background workers.** `Pipeline.process_urls()` distributes work across a configurable worker pool. Discovery and extraction both run in parallel. A Rich Live progress table updates automatically when workers > 1.
+**Concurrent background workers.** `Pipeline.process_urls()` distributes work across a configurable worker pool. Discovery and extraction both run in parallel. A Rich [◑](#ref-3) Live progress table updates automatically when workers > 1.
 
 ## How it works
 
@@ -28,7 +30,7 @@ The thesis is simple. Selector discovery is a one-time cost. Extraction is the c
 <details>
 <summary>What is Yosoi?</summary>
 
-A way to make web scraping cheaper with AI without sacrificing accuracy or speed. Instead of calling an LLM on every scrape or relying on flaky regex heuristics, Yosoi transpiles selectors automatically the first time, so you only pay once and reproduce results for free from then on.
+**Y**ou **O**nly **S**crape **O**nce (**i**teratively). Instead of calling an LLM on every scrape or relying on flaky regex heuristics, Yosoi discovers selectors automatically the first time and caches them. You pay once and extract for free from then on. When selectors go stale, Yosoi re-discovers only the broken fields -- not the whole contract -- so costs stay minimal even as sites change.
 
 </details>
 
@@ -49,20 +51,28 @@ For internal use at Cascading Labs. Every other API or LLM-per-request approach 
 <details>
 <summary>Does Yosoi work with JavaScript-rendered sites?</summary>
 
-Yosoi fetches static HTML. For sites that require JavaScript execution to render content, pair it with a headless browser and pass the rendered HTML manually.
+Yosoi fetches static HTML. For sites that require JavaScript to render content, use a headless browser (Playwright, Puppeteer) to render the page first, then pass the HTML to Yosoi. A native DOM fetcher is planned but not available yet.
 
 </details>
 
 <details>
 <summary>What happens if a site redesigns its layout?</summary>
 
-The cached selectors will likely break. Delete the relevant file from `.yosoi/selectors/` and re-run discovery to generate fresh selectors for the updated layout.
+Some cached selectors will likely break. Yosoi detects stale selectors at scrape time and runs partial rediscovery -- only the broken fields are sent back to the LLM. The fresh selectors are merged into the existing cache. You can also force a full rediscovery by deleting the domain's file from `.yosoi/selectors/` or passing `--force`.
 
 </details>
 
 <details>
 <summary>Which LLM provider gives the best results?</summary>
 
-Results are generally consistent across providers. Groq and Gemini are fast and cheap; OpenAI tends to be more conservative with selector choices. Run discovery with `--provider` to compare.
+Results are generally consistent across providers. Groq and Gemini are fast and cheap; OpenAI tends to be more conservative with selector choices. Run discovery with `--model` to compare (e.g. `--model groq:llama-3.3-70b-versatile`).
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **Pydantic**. Pydantic Services Inc. *Data validation library for Python.* https://docs.pydantic.dev/
+
+<a id="ref-2"></a>○ **asyncio**. Python Software Foundation. *Asynchronous I/O framework in the Python standard library.* https://docs.python.org/3/library/asyncio.html
+
+<a id="ref-3"></a>◑ **Rich**. Will McGugan. *Python library for rich text and progress displays in the terminal.* https://rich.readthedocs.io/

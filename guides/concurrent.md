@@ -3,7 +3,7 @@ title: Concurrent Scraping
 description: Process multiple URLs in parallel with the Pipeline.
 ---
 
-`Pipeline.process_urls()` accepts a list of URLs and a `workers` argument. When `workers > 1`, a Rich Live progress table appears automatically -- no extra setup required.
+`Pipeline.process_urls()` accepts a list of URLs and a `workers` argument. When `workers > 1`, a Rich [△](#ref-1) Live progress table appears automatically. No extra setup required.
 
 ## Basic usage
 
@@ -34,12 +34,13 @@ asyncio.run(main())
 
 ## Result shape
 
-`process_urls()` returns a dict with two keys:
+`process_urls()` returns a dict with three keys:
 
 | Key | Value |
 |-----|-------|
 | `successful` | List of URLs that completed without error |
 | `failed` | List of URLs that raised an exception |
+| `skipped` | List of URLs that were skipped (concurrent mode only) |
 
 ## Notes
 
@@ -76,3 +77,9 @@ Yes, in a good way. If multiple URLs share a domain that has not been discovered
 Not built-in. After `process_urls()` returns, pass `results["failed"]` back into another `process_urls()` call to retry.
 
 </details>
+
+## References
+
+<a id="ref-1"></a>△ **Rich**. Will McGugan. *Python library for rich text and progress displays in the terminal.* https://rich.readthedocs.io/
+
+<a id="ref-2"></a>○ **asyncio**. Python Software Foundation. *Asynchronous I/O framework in the Python standard library.* https://docs.python.org/3/library/asyncio.html
