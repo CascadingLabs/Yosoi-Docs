@@ -106,8 +106,7 @@ async def main():
     pipeline = ys.Pipeline(ys.auto_config(), contract=Product)
 
     async for item in pipeline.scrape('https://qscrape.dev/l1/eshop/catalog/?cat=Forge%20%26%20Smithing'):
-        uv run yosoi -m groq:llama-3.3-70b-versatile --url https://qscrape.dev/l1/eshop/catalog/?cat=Forge%20%26%20Smithing -contract Product
-        print(item.get('title'), item.get('url'))
+        print(item.get('name'), item.get('price'))
 
 asyncio.run(main())
 ```
