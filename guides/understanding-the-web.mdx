@@ -13,7 +13,7 @@ When you load a page in a browser, the browser parses the raw HTML and construct
 
 Yosoi fetches the raw HTML (for now). It sees what the server returns, not what JavaScript builds after the fact. For most news sites, blogs, and product catalogues this is fine. The content is in the HTML. For single-page apps that load data after the initial render, Yosoi will get a mostly-empty shell.
 
-If you can view the page source in your browser and see the text you want to extract, Yosoi can work with it. If the content only appears after JavaScript runs, render the page yourself with Playwright<sup>[○](#ref-2)</sup> or Puppeteer<sup>[◑](#ref-3)</sup> and pass the HTML to Yosoi directly. This is the difference between page source (`Cmd+U` / `Ctrl+U`) and using the inspect tool to view the DOM (`Cmd+Shift+C` / `Ctrl+Shift+C`)
+If you can view the page source in your browser and see the text you want to extract, Yosoi can work with it. If the content only appears after JavaScript runs, render the page yourself with Playwright<sup>[○](#ref-2)</sup> or Puppeteer<sup>[◑](#ref-3)</sup> and pass the HTML to Yosoi directly. This is the difference between page source (`Cmd+U` / `Ctrl+U`) and using the inspect tool to view the DOM (`Cmd+Shift+I` / `Ctrl+Shift+I`)
 
 A native DOM fetcher that handles this automatically is on the [Roadmap](/roadmap/), but is not available yet.
 
